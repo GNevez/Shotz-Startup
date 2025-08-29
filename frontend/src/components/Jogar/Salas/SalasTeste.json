@@ -1,0 +1,464 @@
+[
+    {
+        "Sala": 1,
+        "Nome": "Time Nevez",
+        "Prime": true,
+        "Verificado": true,
+        "Nivel": 16,
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+
+    },
+    {
+        "Sala": 2,
+        "Nome": "Time Sla",
+        "Prime": true,
+        "Verificado": false,
+        "Nivel": 15,
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    },
+    {
+        "Sala": 3,
+        "Nome": "Time Dale",
+        "Prime": false,
+        "Verificado": true,
+        "Nivel": 12,
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    },
+    {
+        "Sala": 4,
+        "Nome": "Time Sla",
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    },
+    {
+        "Sala": 5,
+        "Nome": "Time Sla",
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    },
+    {
+        "Sala": 6,
+        "Nome": "Time Sla",
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    },
+    {
+        "Sala": 7,
+        "Nome": "Time Sla",
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    },
+    {
+        "Sala": 8,
+        "Nome": "Time Sla",
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    },
+    {
+        "Sala": 9,
+        "Nome": "Time Sla",
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    },
+    {
+        "Sala": 10,
+        "Nome": "Time Sla",
+        "Players": {
+            "Player1": {
+                "Nome": "Nevez",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": true,
+                "Nivel": 15
+            },
+            "Player2": {
+                "Nome": "Dolly",
+                "Foto": "urlAvatar",
+                "Prime": true,
+                "Verificado": false,
+                "Nivel": 13
+            },
+            "Player3": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player4": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player5": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            },
+            "Player6": {
+                "Nome": "Dale",
+                "Foto": "urlAvatar",
+                "Prime": false,
+                "Verificado": true,
+                "Nivel": 12
+            }
+        }
+    }
+]

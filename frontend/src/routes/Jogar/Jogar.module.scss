@@ -1,0 +1,358 @@
+$background-transp: rgba(27, 27, 27, 0.4);
+
+$primary: #e63131;
+$secondary: #141414;
+
+.dFlexColumn{
+    display: flex;
+    flex-direction: column;
+}
+
+.containerMain{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 100%;
+    height: 100%;
+    min-height: 800px;
+    background: #141414;
+}
+
+.Row{
+    width: 100%;
+}
+
+.menuPlay{
+    width: 100%;
+    height: 120px;
+    position: relative;
+    top: 20%;
+    background-color: $background-transp;
+    border: 1px solid rgba(114, 114, 114, 0.466);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.menuPlay1{
+    height: 120px;
+}
+
+.menuPlay2{
+    height: 300px;
+}
+
+.row2{
+    width: 100%;
+    margin-top: 20px;
+}
+
+.logButton{
+    display: flex;
+    background-color: #e63131;
+    width: 200px;
+    height: 45px;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+}
+
+.logButton p{
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    transform: skew(20deg);
+}
+
+.svg{
+    height: 25px;
+    margin-right: 10px;
+    fill: #fff;
+    transform: skew(20deg);
+}
+
+.skillLevel{
+    display: flex;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.colMenu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.colMenu p {
+    margin: 0;
+}
+
+.colMenu .skillDiv{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.radioButtonLabel{
+    color: #fff;
+    position: relative;
+    bottom: 40%;
+    left: 150%;
+    width: 150%;
+}
+
+.radioButtonInput{
+    display: none;
+}
+
+.skillInput{
+    display: none;
+}
+
+
+.checkbox {
+    display: none;
+  }
+  
+.toggle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition-duration: .5s;
+}
+  
+  .bars {
+    width: 100%;
+    height: 4px;
+    background-color: #e63131;
+    border-radius: 4px;
+  }
+  
+  .bar2 {
+    transition-duration: .8s;
+  }
+  
+  .bar1, .bar3 {
+    width: 70%;
+  }
+  
+  .checkbox:checked + .toggle .bars {
+    position: absolute;
+    transition-duration: .5s;
+  }
+  
+  .checkbox:checked + .toggle .bar2 {
+    transform: scaleX(0);
+    transition-duration: .5s;
+  }
+  
+  .checkbox:checked + .toggle .bar1 {
+    width: 100%;
+    transform: rotate(45deg);
+    transition-duration: .5s;
+  }
+  
+  .checkbox:checked + .toggle .bar3 {
+    width: 100%;
+    transform: rotate(-45deg);
+    transition-duration: .5s;
+  }
+  
+  .checkbox:checked + .toggle {
+    transition-duration: .5s;
+    transform: rotate(180deg);
+  }
+
+  .filters{
+    justify-content: end;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .opacity0{
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    opacity: 0;
+  }
+
+  .opacity100{
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    opacity: 100;
+  }
+
+  .filterBtn{
+    display: flex;
+    border: 2px solid #e63131;
+    background-color: transparent;
+    width: 120px;
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    text-align: center;
+}
+
+.filterBtn2{
+    display: flex;
+    border: none;
+    background-color: #e63131;
+    width: 120px;
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    text-align: center;
+}
+
+.filterBtn p{
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    transform: skew(20deg);
+}
+
+.filterBtn2 p{
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    transform: skew(20deg);
+}
+
+.skillBtn{
+    display: flex;
+    border: 1px solid #e63131;
+    background-color: transparent;
+    width: 90px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.skillBtn2{
+    display: flex;
+    border: 1px solid #e63131;
+    background-color: #e63131;
+    width: 90px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.skillBtn p {
+    transform: skew(20deg);
+}
+
+.skillBtn2 p {
+    transform: skew(20deg);
+}
+
+.playFilter{
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.hr{
+    color: #fff;
+}
+
+.checkVaga{
+    display: flex;
+    border: 2px solid #e63131;
+    width: 15px;
+    height: 15px;
+    justify-content: center;
+    align-items: center;
+    transform: skew(-20deg);
+}
+
+.checkInput{
+    opacity: 0;
+}
+
+.bg2{
+    display: flex;
+    width: 15px;
+    height: 15px;
+    justify-content: center;
+    align-items: center;
+    transform: skew(-20deg);
+    background-color: #e63131;
+}
+
+
+.checkInput:checked + .bg1{
+    background-color: #e63131 !important;
+}
+
+.searchRooms{
+    background-color: #141414;
+    border: 1px solid #63636367;
+    color: #fff;
+}
+
+.searchRooms:focus{
+    outline: none; 
+    border: 1px solid #e63131;
+}
+
+.slider{
+    -webkit-appearance: none;
+    width: 300px;
+    background-color: #e63131;
+    border-radius: 5px;
+}
+
+.levelSkill{
+    background-color: #e63131;
+    transform: skew(-20deg);
+    height: 20px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: 500;
+}
+
+.skills{
+    gap: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+

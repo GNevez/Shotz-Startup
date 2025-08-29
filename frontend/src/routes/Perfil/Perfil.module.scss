@@ -1,0 +1,243 @@
+$background-transp: rgba(27, 27, 27, 0.4);
+
+$primary: #e63131;
+$secondary: #1d1d1d;
+
+.active{
+    background-color: $primary !important;
+    box-shadow: 0 0 20px #e63131;
+}
+
+
+.containerMain{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-image: url("../../assets/bgHowToPlay.png");
+}
+
+.Row{
+    width: 100%;
+}
+
+.menuBtns{
+    background-color: $background-transp;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    align-items: center;
+    height: 62.5%;
+    justify-content: space-around;
+    border-radius: 10px;
+}
+
+.btns{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.btns:hover{
+    background-color: $primary !important;
+    box-shadow: 0 0 20px #e63131;
+}
+
+.height100{
+    height: 100% !important;
+}
+
+.containerPerfil{
+    height: 70%;
+}
+
+.iconUser{
+    fill: #e63131;
+    height: 40px;
+    transition: 0.3s ease;
+}
+
+.UserName{
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 0;
+    margin-left: 20px;
+}
+
+.perfil1{
+    display: flex;
+    align-items: center;
+}
+
+.perfil2{
+    background-color: $background-transp;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    height: 20%;
+    justify-content: space-around;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.perfil3{
+    background-color: $background-transp;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    height: 65%;
+    justify-content: space-around;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.iconsMenubar{
+    fill: white;
+    height: 25px;
+    transition: 0.3s ease;
+}
+
+.activeBtn{
+    height: 30px;
+}
+
+.divId{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 10px;
+}
+
+.Text1 {
+    color: white;
+    font-size: 20px;
+    margin: 0;
+    font-weight: 400;
+}
+
+.Text2{
+    margin: 0;
+    color: #9b9b9b;
+    font-size: 20px;
+    
+}
+
+.Text3{
+    margin: 0;
+    color: #e63131;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    --tw-drop-shadow: drop-shadow(0px 0px 100px #e63131);
+}
+.Text4{
+    margin-bottom: 0;
+    margin-left: 10px;
+    color: #e63131;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    --tw-drop-shadow: drop-shadow(0px 0px 100px #e63131);
+}
+
+.hr{
+    width: 60px !important;
+    color: white;
+    position: relative;
+    transform: rotate(90deg);
+}
+
+.logButton{
+    display: flex;
+    background-color: #e63131;
+    width: 160px;
+    height: 45px;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    box-shadow: 0;
+    transition: 0.3s ease;
+}
+
+.logButton p{
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    transform: skew(20deg);
+}
+
+.logButton:hover{
+    box-shadow: 0 0 20px #e63131;
+}
+
+.discordIcon{
+    height: 25px;
+    margin-right: 15px;
+}
+
+.iconCnt{
+    fill: #fff;
+    width: 20px;
+    margin-left: 10px;
+    transform: skew(20deg);
+}
+
+.logoPequena{
+    margin-right: 20px;
+    display: block;
+    border-radius: 50%;
+}
+
+.divMain{
+    height: 100%;
+}
+
+@media only screen and (max-width: 1200px) {
+    .containerPerfil{
+        position: relative;
+        top: 40px;
+    }
+    .Row{
+        flex-direction: column;
+        position: relative;
+        top: 15%;
+    }
+    .divMain{
+        width: 70%;
+        height: 0;
+    }
+    .menuBtns{
+        display: flex;
+        flex-direction: row;
+        height: 10%;
+    }
+
+    .logoPequena{
+        display: none;
+    }
+    .perfil2{
+        flex-direction: column;
+        height: 90%;
+    }
+    .logButton{
+        display: none;
+    }
+    .hr{
+        transform: rotate(90deg);
+        height: 90% !important;
+    }
+}

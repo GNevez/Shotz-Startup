@@ -1,0 +1,66 @@
+$background-transp: rgba(27, 27, 27, 0.4);
+
+$primary: #e63131;
+$secondary: #141414;
+
+.modalStyle{
+    background-color: $secondary;
+    border: 1px solid $primary;
+    color: #fff;
+}
+
+.skillBtn{
+    display: flex;
+    border: 1px solid #e63131;
+    background-color: transparent;
+    width: 130px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.skillBtn2{
+    display: flex;
+    border: 1px solid #e63131;
+    background-color: #e63131;
+    width: 130px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.skillBtn p {
+    transform: skew(20deg);
+    margin: 0;
+}
+
+.skillBtn2 p {
+    transform: skew(20deg);
+    margin: 0;
+}
+
+.inputSla{
+    background-color: $secondary;
+    border: 1px solid #63636367;
+    color: #fff;
+}
+
+.inputSla:focus{
+    outline: none; 
+    color: #fff;
+    border: 1px solid #e63131;
+}
+
+.skillInput{
+    display: none;
+}

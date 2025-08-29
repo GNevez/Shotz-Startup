@@ -1,0 +1,32 @@
+$primary: #e63131;
+
+
+.background{
+    background: linear-gradient(180deg,transparent 80%,#1b000060),url(../assets/bgHowToPlay.png) center/cover no-repeat;
+    background-color: #252423;
+    height: 1080px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+
+}
+
+.container1{
+    margin-top: 140px;
+}
+
+.mainText{
+    position: relative;
+    font-size: 80px;
+    text-transform: uppercase;
+    margin-right: 5px;
+    color: white;
+}
+.mainText2{
+    color: $primary;
+    font-size: 80px;
+    text-transform: uppercase;
+    margin-left: 5px;
+    position: relative;
+}

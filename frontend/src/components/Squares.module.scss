@@ -1,0 +1,17 @@
+$primary: #e63131;
+
+.square{
+    position: relative,
+}
+
+.dropShadow{
+    --tw-drop-shadow: drop-shadow(0px 0px 20px rgba(237, 0, 0, 0.55));
+    color: $primary;
+}
+
+.fontWeight{
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}

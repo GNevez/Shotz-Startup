@@ -1,0 +1,242 @@
+.rowNav{
+    height: 100%;
+    width: 100%;
+}
+
+.navBar{
+  display: flex;
+  height: 75px;
+  align-items: center;
+  background-color: rgb(27, 27, 27, 0.4);
+  justify-content: center;
+  position: fixed;
+  z-index: 2;
+}
+  
+.navItens{
+  text-decoration: none;
+  color: rgb(139, 139, 139) !important;
+  transition: 0.3s;
+}
+
+.navItens3{
+    display: none;
+    text-decoration: none;
+    color: rgb(139, 139, 139) !important;
+    transition: 0.3s;
+  }
+
+  .navItens3:hover{
+    color: #e63131 !important;
+}
+
+.navItens2{
+    height: 100%;
+    text-decoration: none;
+    transform: skew(-20deg);
+
+  }
+
+.navItens:hover{
+    color: #e63131 !important;
+}
+
+.navLog{
+    display: flex;
+    justify-content: end;
+}
+
+.navLogo{
+    display: flex;
+}
+
+h5{
+    text-transform: uppercase;
+}
+
+.dropdownBtn{
+    position: fixed;
+    top: 80px;
+    left: 86%;
+    background-color: rgba(27, 27, 27, 0.4);
+    width: 160px !important;
+    flex-direction: column;
+    height: 100px;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #9b979730;
+}
+
+.link:hover {
+    color: #e63131;
+}
+
+.iconNav{
+    width: 18px;
+    fill: #e63131;
+    margin-right: 10px;
+}
+
+.iconPlay{
+    fill: #fff;
+    width: 35px;
+    margin-right: 15px;
+}
+
+.hr{
+    width: 100%;
+    color: #fff;
+    margin: 0;
+}
+
+.link{
+    text-decoration: none;
+    color: #868686;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.logButton{
+    display: flex;
+    background-color: #e63131;
+    width: 230px;
+    height: 100%;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.logButton p{
+    margin: 0;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    transform: skew(20deg);
+    text-transform: uppercase;
+}
+
+.discordIcon{
+    height: 25px;
+    margin-right: 15px;
+    transform: skew(20deg);
+}
+
+.username{
+    font-size: 25px;
+    color: #fff;
+    margin: 0;
+    transition: 0.5s ease;
+}
+
+.usernameDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    cursor: pointer;
+}
+
+.imgUser{
+    width: 35px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.arrow{
+    width: 25px;
+    margin-left: 10px;
+    fill: #fff;
+    transition: 0.5s ease;
+}
+
+.usernameDiv:hover .arrow{
+    fill: #e63131;
+}
+
+.usernameDiv:hover .username{
+    color: #e63131;
+}
+
+@media only screen and (max-width: 1290px) {
+    .dropdownBtn{
+        left: 83%;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .dropdownBtn{
+        left: 80%;
+    }
+
+    .navBar{
+        justify-content: center;
+    }
+
+    .navLog{
+        display: none !important;
+    }
+
+    .navLogo{
+        display: none !important;
+    }
+  }
+
+  @media only screen and (max-width: 650px){
+    .dropdownBtn{
+        left: 68%;
+    }
+    .logButton{
+        width: 150px;
+        height: 100% !important;
+    }
+  }
+
+  @media only screen and (max-width: 470px){
+    
+    .logButton{
+        display: none;
+    }
+
+    .navItens3{
+        display: block;
+    }
+  }
+
+  .username{
+    font-size: 25px;
+    color: #fff;
+    margin: 0;
+    transition: 0.5s ease;
+}
+
+.usernameDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    cursor: pointer;
+}
+
+.imgUser{
+    width: 35px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.arrow{
+    width: 25px;
+    margin-left: 10px;
+    fill: #fff;
+    transition: 0.5s ease;
+}
+
+.usernameDiv:hover .arrow{
+    fill: #e63131;
+}
+
+.usernameDiv:hover .username{
+    color: #e63131;
+}
+

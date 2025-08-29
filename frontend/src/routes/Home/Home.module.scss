@@ -1,0 +1,142 @@
+.sobreposicao {
+    position: relative;
+  }
+  
+.sobreposicao::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Cor sólida com transparência */
+}
+
+.mainText{
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    display: flex;
+    text-transform: uppercase;
+    font-size: 70px;
+    width: 100%;
+    justify-content: center;
+}
+
+.mainText strong {
+    color: #e63131;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 70px;
+}
+
+.subText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(201, 201, 201);
+    display: flex;
+    font-size: 30px;
+    font-weight: 500;
+    width: 100%;
+    justify-content: center;
+}
+
+.subText strong {
+    text-decoration: underline;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.logoShotz{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 200px;
+}
+
+.rodapeHome{
+    position: absolute;
+    width: 100%;
+    background-color: rgba(20, 20, 20, 0.5);
+    height: 75px;
+    bottom: 3px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+.warnLogo{
+    height: 20px;
+}
+
+@media only screen and (max-width: 1450px) {
+    .subText{
+        font-size: 30px;
+    }
+    .subText p{
+        font-size: 30px;
+    }
+    .mainText{
+        font-size: 40px;
+    }
+    .mainText strong{
+        font-size: 40px;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .subText{
+        font-size: 20px;
+    }
+    .subText p{
+        font-size: 20px;
+    }
+    .mainText{
+        font-size: 30px;
+    }
+    .mainText strong{
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .subText{
+        display: none;
+    }
+    
+    .mainText{
+        font-size: 20px;
+        top: 60%;
+    }
+    .mainText strong{
+        font-size: 20px;
+    }
+
+    .logoShotz{
+        display: flex;
+    }
+}
+
+@media only screen and (max-width: 520px) {
+    .subText{
+        display: none;
+    }
+    
+    .mainText{
+        font-size: 20px;
+        top: 65%;
+    }
+    .mainText strong{
+        font-size: 20px;
+    }
+
+    .logoShotz{
+        display: flex;
+    }
+}

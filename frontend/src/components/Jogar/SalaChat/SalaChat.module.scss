@@ -1,0 +1,243 @@
+$background-transp: rgba(27, 27, 27, 0.4);
+
+$primary: #e63131;
+$secondary: #141414;
+
+.container{
+    display: flex;
+    width: 15%;
+    height: 75%;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 1px solid $primary;
+    border-bottom: 1px solid $primary;
+    border-right: 1px solid $primary;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 1;
+    background-color: $secondary;
+}
+
+.inContainer{
+    width: 100%;
+}
+
+.nivelDiv{
+    display: flex;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 3px solid $primary;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.btnSala{
+    display: flex;
+    width: 40px;
+    height: 35px;
+    background-color: #e63131;
+    border: none;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.icons{
+    width: 25px;
+    fill: #fff;
+    transition: 0.3s ease;
+}
+
+.btnSala:hover .icons{
+    transform: scale(1.2);
+}
+
+.hr{
+    color: #fff;
+    width: 100%;
+}
+
+.skillBtn{
+    display: flex;
+    border: 1px solid #e63131;
+    background-color: transparent;
+    width: 70px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+}
+.skillInput{
+    display: none;
+}
+.skillBtn2{
+    display: flex;
+    border: 1px solid #e63131;
+    background-color: #e63131;
+    width: 70px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform: skew(-20deg);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.skillBtn p {
+    transform: skew(20deg);
+    margin: 0;
+}
+
+.skillBtn2 p {
+    transform: skew(20deg);
+    margin: 0;
+}
+
+.playersCells{
+    height: 60px;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.playersCells p {
+    font-size: 18px;
+}
+
+.nivelDiv{
+    display: flex;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 3px solid $primary;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.fotoDiv{
+    display: flex;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid $primary;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+// Chat
+
+.chatContainer{
+    display: flex;
+    flex-direction: column;
+    background-color: $secondary;
+    width: 20%;
+    height: 40%;
+    position: fixed;
+    top: 60%;
+    right: 13%;
+    transform: translateX(50%);
+    border-right: 1px solid $primary;
+    border-left: 1px solid $primary;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    z-index: 2;
+    transition: 0.3s ease;
+}
+
+.btnOpenChat{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 35px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: #e63131;
+    border: none;
+    align-items: center;
+}
+
+.btnOpenChat p{
+    font-size: 17px;
+    color: #fff;
+    font-weight: 600;
+    margin: 0;
+}
+
+.iconChat{
+    width: 17px;
+    fill: #fff;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.iconChat2{
+    transform: rotate(180deg);
+}
+
+.listChat{
+    list-style-type: none;
+    padding: 0;
+}
+
+.chatArea{
+    height: 100%;
+    max-height: 265px;
+    overflow: auto;
+}
+
+.chatArea::-webkit-scrollbar{
+    display: none;
+}
+
+.userFoto { 
+    border: 2px solid #e63131;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.mensagem{
+    color: #e63131;
+}
+
+.inputChatDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatInput{
+    width: 90%;
+    background-color: $background-transp;
+    border: 1px solid #5c5c5c;
+    color: #fff;
+}
+
+.chatInput:focus{
+    border: 1px solid $primary;
+    outline: none;
+}

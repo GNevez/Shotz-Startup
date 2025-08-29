@@ -1,0 +1,158 @@
+$background-transp: rgba(27, 27, 27, 0.4);
+
+$primary: #e63131;
+$secondary: #141414;
+
+.menuServidores{
+    width: 100%;
+    position: relative;
+    top: 20%;
+    background-color: $background-transp;
+    border: 1px solid rgba(114, 114, 114, 0.466);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.row2{
+    display: flex;
+    row-gap: 40px;
+    column-gap: 20px;
+    padding: 40px;
+}
+
+.card{
+    display: flex;
+    width: 280px;
+    height: 300px;
+    border-radius: 10px;
+    border: 1px solid #e63131;
+    background-color: $background-transp;
+    justify-content: start;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+
+.topCard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.nivelTime{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #e63131;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nivelTimeTexto{
+    margin: 0;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.primeVerificado{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #e63131;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timeName{
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.barraHor{
+    width: 100%;
+    height: 1px;
+    margin-top: 10px;
+    background-color: #e63131;
+}
+
+.rowCardCells{
+    width: 100%;
+}
+
+.cardCells{
+    border-top: 1px solid #e63131;
+    border-bottom: 1px solid #e63131;
+    border-right: 1px solid #e63131;
+    border-left: 1px solid #e63131;
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+}
+
+.cardCells2{
+    border-top: 1px solid #e63131;
+    border-right: 1px solid #e63131;
+    border-left: 1px solid #e63131;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.cardCells3{
+    border-bottom: 1px solid #e63131;
+    border-right: 1px solid #e63131;
+    border-left: 1px solid #e63131;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.btnEntrar{
+    border: none;
+    background-color: #e63131;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    gap: 10px;
+    box-shadow: 0;
+    transition: 0.3s ease;
+}
+
+.btnEntrar:hover{
+    box-shadow: 0 0 20px #e63131;
+}
+
+.btnEntrar p{
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0;
+    color: #fff;
+}
+
+.svgEntrar{
+    width: 17px;
+    fill: #fff;
+}
+
+.avatarUser{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
