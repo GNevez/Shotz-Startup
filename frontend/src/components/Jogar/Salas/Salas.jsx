@@ -8,15 +8,15 @@ import { selectLobbys } from "../../../redux/lobbySlice";
 import socket from "../../../services/socket";
 
 const Salas = () => {
-
   const salasList = useSelector(selectLobbys);
   const user = useSelector((state) => state.user);
 
-  console.log(salasList);
+  // useEffect(() => {
+  //   console.log(salasList);
+  // }, [salasList]);
 
   const handleJoin = (Sala) => {
     socket.emit("joinRoom", { Sala: Sala, id: user.id });
-    window.location.reload();
   };
 
   const elementos = () => {

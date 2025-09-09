@@ -2,10 +2,12 @@ import React from "react";
 import styles from "./SalaChat.module.scss";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 import socket from "../../../services/socket";
 
-const SalaChat = () => {
+const SalaChat = (props) => {
+
   const user = useSelector((state) => state.user);
 
   const [radioSala, setRadioSala] = useState(false);
@@ -35,9 +37,25 @@ const SalaChat = () => {
     socket.emit("messageChat", dataMessage);
   };
 
-  socket.on("messageChat", (data) => {
-    console.log(data);
-  });
+  useEffect(() => {
+    const handleLobbyCreated = (data) => {
+      console.log(data);
+    };
+    const handleMessageChat = (data) => {
+      console.log(data);
+    };
+
+    socket.on("attSala", (data) => {
+      setYourRoom(data.Players);
+    });
+
+    socket.on("messageChat", handleMessageChat);
+
+    return () => {
+      socket.off("playerJoined", handleLobbyCreated);
+      socket.off("messageChat", handleMessageChat);
+    };
+  }, []);
 
   return (
     <>
@@ -113,36 +131,15 @@ const SalaChat = () => {
           </div>
           <hr className={styles.hr} />
           <div className="d-flex flex-column">
-            <div className={styles.playersCells}>
-              <div className={styles.fotoDiv}></div>
-              <p className="text-white m-0">Nevez</p>
-              <div className={styles.nivelDiv}>20</div>
-            </div>
-            <div className={styles.playersCells}>
-              <div className={styles.fotoDiv}></div>
-              <p className="text-white m-0">Nevez</p>
-              <div className={styles.nivelDiv}>20</div>
-            </div>
-            <div className={styles.playersCells}>
-              <div className={styles.fotoDiv}></div>
-              <p className="text-white m-0">Nevez</p>
-              <div className={styles.nivelDiv}>20</div>
-            </div>
-            <div className={styles.playersCells}>
-              <div className={styles.fotoDiv}></div>
-              <p className="text-white m-0">Nevez</p>
-              <div className={styles.nivelDiv}>20</div>
-            </div>
-            <div className={styles.playersCells}>
-              <div className={styles.fotoDiv}></div>
-              <p className="text-white m-0">Nevez</p>
-              <div className={styles.nivelDiv}>20</div>
-            </div>
-            <div className={styles.playersCells}>
-              <div className={styles.fotoDiv}></div>
-              <p className="text-white m-0">Nevez</p>
-              <div className={styles.nivelDiv}>20</div>
-            </div>
+            {props.yourRoom.map((item, index) => {
+              return (
+                <div key={index} className={styles.playersCells}>
+                  <div className={styles.fotoDiv}></div>
+                  <p className="text-white m-0">{item.Nome}</p>
+                  <div className={styles.nivelDiv}>{item.Nivel}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

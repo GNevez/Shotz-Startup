@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Salas from "../../components/Jogar/Salas/Salas";
-
-import { io } from "socket.io-client";
 
 import axios from "axios";
 import styles from "./Jogar.module.scss";
@@ -20,16 +18,11 @@ const Jogar = () => {
 
   const [isInRoom, setIsInRoom] = useState(false);
 
-  socket.on("lobbys", (salas) => {
-    dispatchSalas();
-    dispatch(changeLobby(salas));
-  });
-
   function dispatchSalas() {
     axios.get("http://localhost:1500/lobbys").then((response) => {
       if (response.data) {
         dispatch(changeLobby(response.data));
-        console.log(response.data);
+        // console.log(response.data);
       }
     });
   }
@@ -41,7 +34,6 @@ const Jogar = () => {
   useEffect(() => {
     for (const item of salasList) {
       for (const players of item.Players) {
-        console.log(players);
         if (players.Id === user.id) {
           setIsInRoom(true);
         }
@@ -55,6 +47,7 @@ const Jogar = () => {
   const [valueRange, setValueRange] = useState(50);
   const [radioSkill, setRadioSkill] = useState(false);
   const [visiblePopCreate, setVisiblePopCreate] = useState(false);
+  const [yourRoom, setYourRoom] = useState([]);
 
   const handleChangeRange = (event) => {
     setValueRange(event.target.value);
@@ -84,9 +77,58 @@ const Jogar = () => {
     setVisiblePopCreate(false);
   };
 
+  useEffect(() => {
+    const handleLobbys = (salas) => {
+      dispatchSalas();
+      dispatch(changeLobby(salas));
+    };
+    const handlePlayerJoined = () => {
+      fetchYourRoom();
+      dispatchSalas();
+    };
+
+    const handleYourRoom = (data) => {
+      console.log(data);
+
+      setYourRoom(data.Players);
+    };
+
+    socket.on("lobbys", handleLobbys);
+    socket.on("playerJoined", handlePlayerJoined);
+
+    console.log("teste: " + user.id);
+
+    function fetchYourRoom() {
+      if (user && user.id) {
+        console.log("Enviando requisição para o ID:", user.id);
+        axios
+          .post("http://localhost:1500/yourRoom", { id: user.id })
+          .then((response) => {
+            if (response.data) {
+              handleYourRoom(response.data);
+            }
+          })
+          .catch((error) => {
+            // É uma boa prática tratar o erro aqui também!
+            console.error(
+              "Erro ao buscar a sala do usuário:",
+              error.response?.data || error.message
+            );
+          });
+      }
+    }
+
+    fetchYourRoom();
+
+    return () => {
+      socket.off("lobbys", handleLobbys);
+      socket.off("playerJoined", handlePlayerJoined);
+    };
+  }, [user.id]);
+
   return (
     <>
-      {isInRoom ? <SalaChat /> : ""}
+      {isInRoom ? <SalaChat yourRoom={yourRoom} /> : ""}
 
       <div
         className={

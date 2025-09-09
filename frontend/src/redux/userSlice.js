@@ -9,17 +9,17 @@ export const Slice = createSlice({
     isLogged: false,
   },
   reducers: {
-    changeUser(state, payload) {
+    changeUser(state, action) {
       return {
         ...state,
         isLogged: true,
-        name: payload["payload"].user,
-        id: payload["payload"].id,
-        avatar: payload["payload"].avatar,
+        name: action.payload.user,
+        id: action.payload.id,
+        avatar: action.payload.avatar,
       };
     },
     logout(state) {
-      return { ...state, isLogged: false, name: "", id: "" };
+      return { ...state, isLogged: false, name: "", id: "", avatar: "" };
     },
   },
 });
