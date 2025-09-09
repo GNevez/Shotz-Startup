@@ -61,7 +61,9 @@ io.on("connection", (socket) => {
       console.log("Sala criada:", createLobby);
       callback({ success: true, message: "Sala criada com sucesso!" });
       console.log("Salas", salas);
+      //console.log("Teste: " + createLobby.Sala);
 
+      io.to(salaCreateLobby).emit("attSala", createLobby);
       io.emit("lobbys", salas);
     }
   });
@@ -115,6 +117,7 @@ io.on("connection", (socket) => {
 
             // Emite o evento atualizado da sala
             io.to(Sala).emit("playerJoined", SalaFind);
+            io.to(Sala).emit("attSala", SalaFind);
           } else {
             console.log("Jogador já existe na sala:", user.id);
           }
@@ -163,4 +166,25 @@ io.on("connection", (socket) => {
 
 app.get("/lobbys", (req, res) => {
   res.send(salas);
+});
+
+app.post("/yourRoom", (req, res) => {
+  const userId = req.body.id;
+  console.log("ID recebido no backend:", userId);
+
+  salas.forEach((element) => {
+    console.log(element.Players);
+  });
+
+  const salaEncontrada = salas.find((sala) =>
+    sala.Players.some((player) => player.Id === userId)
+  );
+
+  if (salaEncontrada) {
+    res.status(200).send(salaEncontrada);
+  } else {
+    res
+      .status(404)
+      .send({ message: "Error: Sala não encontrada para este jogador" });
+  }
 });

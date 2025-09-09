@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 const port = process.env.PORT || 1500;
 
@@ -14,6 +14,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.json());
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,6 +39,12 @@ const Server = require("socket.io").Server;
 const http = require("http");
 
 const serverHttp = http.createServer(app);
-const io = new Server(serverHttp);
+const io = new Server(serverHttp, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  },
+});
 
 module.exports = { serverHttp, io, app };
