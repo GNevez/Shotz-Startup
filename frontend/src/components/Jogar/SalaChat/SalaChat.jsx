@@ -5,14 +5,29 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import socket from "../../../services/socket";
+import MatchFound from "../MatchFound/MatchFound";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SalaChat = (props) => {
-
   const user = useSelector((state) => state.user);
 
   const [radioSala, setRadioSala] = useState(false);
   const [chatOpen, setChatOpen] = useState(true);
   const [inputChatValue, setInputChatValue] = useState(""); // Estado para armazenar o valor do input
+  const [yourRoom, setYourRoom] = useState(props.yourRoom || []);
+  const [inQueue, setInQueue] = useState(() => {
+    // Recuperar estado do localStorage
+    const savedInQueue = localStorage.getItem('inQueue');
+    return savedInQueue === 'true';
+  });
+  const [matchData, setMatchData] = useState(null);
+  const [showMatchModal, setShowMatchModal] = useState(false);
+  const [currentSalaId, setCurrentSalaId] = useState(() => {
+    // Recuperar salaId do localStorage
+    return localStorage.getItem('currentSalaId');
+  });
 
   const handleInputChange = (event) => {
     setInputChatValue(event.target.value); // Atualiza o estado com o valor do input
@@ -38,6 +53,65 @@ const SalaChat = (props) => {
   };
 
   useEffect(() => {
+    setYourRoom(props.yourRoom);
+  }, [props.yourRoom]);
+
+  // Salvar estado no localStorage
+  useEffect(() => {
+    localStorage.setItem('inQueue', inQueue.toString());
+  }, [inQueue]);
+
+  useEffect(() => {
+    if (currentSalaId) {
+      localStorage.setItem('currentSalaId', currentSalaId);
+    }
+  }, [currentSalaId]);
+
+  // Reconectar à fila após F5 se estava na fila
+  useEffect(() => {
+    if (inQueue && yourRoom && yourRoom.Sala) {
+      console.log("Reconectando à fila após F5...");
+      const salaId = yourRoom.Sala;
+      setCurrentSalaId(salaId);
+      socket.emit("joinQueue", { salaId });
+    }
+  }, [inQueue, yourRoom]);
+
+  // Listener global para debug do matchFound
+  useEffect(() => {
+    const debugMatchFound = (data) => {
+      console.log("🔍 DEBUG: Evento matchFound recebido globalmente:", data);
+    };
+    
+    // Teste de conectividade do socket
+    const testSocket = () => {
+      console.log("🔌 Testando conectividade do socket...");
+      console.log("Socket conectado:", socket.connected);
+      console.log("Socket ID:", socket.id);
+    };
+    
+    socket.on("matchFound", debugMatchFound);
+    socket.on("connect", testSocket);
+    
+    // Testar imediatamente
+    testSocket();
+    
+    return () => {
+      socket.off("matchFound", debugMatchFound);
+      socket.off("connect", testSocket);
+    };
+  }, []);
+
+  // Evitar múltiplas entradas na fila
+  useEffect(() => {
+    if (inQueue && currentSalaId) {
+      console.log("Usuário já está na fila, não emitindo joinQueue novamente");
+    }
+  }, [inQueue, currentSalaId]);
+
+
+  useEffect(() => {
+    
     const handleLobbyCreated = (data) => {
       console.log(data);
     };
@@ -45,17 +119,130 @@ const SalaChat = (props) => {
       console.log(data);
     };
 
+    const handleQueueJoined = (data) => {
+      console.log("Fila:", data);
+      // Só mostrar toast se realmente estiver na fila
+      if (inQueue) {
+        toast.info(`Posição na fila: ${data.position}`);
+      }
+    };
+
+    const handleQueueError = (data) => {
+      console.log("Erro na fila:", data);
+      toast.error(data.message);
+      setInQueue(false);
+    };
+
+    const handleMatchFound = (data) => {
+      console.log("🎮 MATCH FOUND RECEBIDO NO FRONTEND! 🎮");
+      console.log("Dados do match:", data);
+      console.log("yourRoom atual:", yourRoom);
+      console.log("currentSalaId:", currentSalaId);
+      
+      setMatchData({
+        matchId: data.matchId,
+        opponentSala: data.opponentSala,
+        yourSala: yourRoom, // yourRoom já tem a estrutura correta
+        salaId: currentSalaId,
+        timeToAccept: data.timeToAccept
+      });
+      setShowMatchModal(true);
+      setInQueue(false);
+    };
+
+
+    const handleMatchRejected = (data) => {
+      console.log("Match rejeitado:", data);
+      toast.warning("Match rejeitado. Voltando para a fila...");
+      setShowMatchModal(false);
+      setMatchData(null);
+      // Voltar para a fila automaticamente
+      if (currentSalaId) {
+        socket.emit("joinQueue", { salaId: currentSalaId });
+        setInQueue(true);
+      }
+    };
+
+    const handleMatchRejectedByYou = (data) => {
+      console.log("Você rejeitou o match:", data);
+      toast.warning(data.message);
+      setShowMatchModal(false);
+      setMatchData(null);
+      
+      // Resetar estado da fila completamente
+      setInQueue(false);
+      setCurrentSalaId(null);
+      localStorage.removeItem('inQueue');
+      localStorage.removeItem('currentSalaId');
+      
+      console.log("Estado da fila resetado após rejeição");
+    };
+
+    const handleMatchRejectedByOpponent = (data) => {
+      console.log("Oponente rejeitou o match:", data);
+      toast.info(data.message);
+      setShowMatchModal(false);
+      setMatchData(null);
+      // Manter na fila - não fazer nada
+    };
+
+    const handleMatchConfirmed = (data) => {
+      console.log("Match confirmado:", data);
+      toast.success("Partida confirmada! Iniciando jogo...");
+      // Limpar estado da fila
+      setInQueue(false);
+      setCurrentSalaId(null);
+      localStorage.removeItem('inQueue');
+      localStorage.removeItem('currentSalaId');
+      // Aqui você pode redirecionar para o jogo ou fazer outras ações
+    };
+
     socket.on("attSala", (data) => {
-      setYourRoom(data.Players);
+      console.log("attSala recebido:", data);
+      setYourRoom(data); // Atualizar o objeto completo da sala
     });
 
     socket.on("messageChat", handleMessageChat);
+    socket.on("queueJoined", handleQueueJoined);
+    socket.on("queueError", handleQueueError);
+    socket.on("matchFound", handleMatchFound);
+    socket.on("matchConfirmed", handleMatchConfirmed);
+    socket.on("matchRejected", handleMatchRejected);
+    socket.on("matchRejectedByYou", handleMatchRejectedByYou);
+    socket.on("matchRejectedByOpponent", handleMatchRejectedByOpponent);
 
     return () => {
       socket.off("playerJoined", handleLobbyCreated);
       socket.off("messageChat", handleMessageChat);
+      socket.off("attSala");
+      socket.off("queueJoined", handleQueueJoined);
+      socket.off("queueError", handleQueueError);
+      socket.off("matchFound", handleMatchFound);
+      socket.off("matchConfirmed", handleMatchConfirmed);
+      socket.off("matchRejected", handleMatchRejected);
+      socket.off("matchRejectedByYou", handleMatchRejectedByYou);
+      socket.off("matchRejectedByOpponent", handleMatchRejectedByOpponent);
     };
-  }, []);
+  }, [props.yourRoom, currentSalaId]);
+
+  const handleJoinQueue = () => {
+    if (inQueue) {
+      toast.warning("Você já está procurando partida!");
+      return;
+    }
+    
+    if (yourRoom && yourRoom.Sala) {
+      const salaId = yourRoom.Sala;
+      console.log("Entrando na fila - salaId: " + salaId);
+      
+      socket.emit("joinQueue", { salaId });
+      setInQueue(true);
+      setCurrentSalaId(salaId);
+      toast.success("Você entrou na fila de matchmaking!");
+    } else {
+      toast.error("Erro: ID da sala não encontrado");
+    }
+  };
 
   return (
     <>
@@ -84,6 +271,27 @@ const SalaChat = (props) => {
                 <path d="M352 96l64 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0c53 0 96-43 96-96l0-256c0-53-43-96-96-96l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32zm-9.4 182.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L242.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z" />
               </svg>
             </button>
+            <button
+              className={styles.btnSala}
+              style={{
+                width: "100%",
+                fontWeight: "600",
+                textTransform: "uppercase",
+                backgroundColor: inQueue ? "#e63131" : "#667eea",
+                opacity: inQueue ? 0.7 : 1,
+                cursor: inQueue ? "not-allowed" : "pointer"
+              }}
+              onClick={handleJoinQueue}
+              disabled={inQueue}
+            >
+              {inQueue ? "Procurando partida..." : "Entrar na fila"}
+            </button>
+            {/* Debug info */}
+            {process.env.NODE_ENV === 'development' && (
+              <div style={{fontSize: '10px', color: 'white', marginTop: '5px'}}>
+                Debug: inQueue={inQueue.toString()}, currentSalaId={currentSalaId}
+              </div>
+            )}
           </div>
           <hr className={styles.hr} />
           <h5 className="text-white m-0 mb-3">TIPO DE SALA</h5>
@@ -131,7 +339,7 @@ const SalaChat = (props) => {
           </div>
           <hr className={styles.hr} />
           <div className="d-flex flex-column">
-            {props.yourRoom.map((item, index) => {
+            {yourRoom && yourRoom.Players && yourRoom.Players.map((item, index) => {
               return (
                 <div key={index} className={styles.playersCells}>
                   <div className={styles.fotoDiv}></div>
@@ -239,6 +447,21 @@ const SalaChat = (props) => {
           />
         </form>
       </div>
+      
+      <MatchFound
+        show={showMatchModal}
+        onHide={() => setShowMatchModal(false)}
+        matchData={matchData}
+        onMatchConfirmed={(data) => {
+          console.log("Match confirmado:", data);
+          // Implementar lógica de redirecionamento para o jogo
+        }}
+        onMatchRejected={(data) => {
+          console.log("Match rejeitado:", data);
+          setShowMatchModal(false);
+          setMatchData(null);
+        }}
+      />
     </>
   );
 };

@@ -8,6 +8,7 @@ import SalaChat from "../../components/Jogar/SalaChat/SalaChat";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLobby } from "../../redux/lobbySlice";
 import { selectLobbys } from "../../redux/lobbySlice";
+import { ToastContainer } from "react-toastify";
 
 import socket from "../../services/socket";
 
@@ -89,8 +90,8 @@ const Jogar = () => {
 
     const handleYourRoom = (data) => {
       console.log(data);
-
-      setYourRoom(data.Players);
+      
+      setYourRoom(data);
     };
 
     socket.on("lobbys", handleLobbys);
@@ -360,6 +361,7 @@ const Jogar = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

@@ -1,0 +1,269 @@
+.matchModal {
+  .modal-dialog {
+    max-width: 800px;
+  }
+}
+
+.modalHeader {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modalBody {
+  background: #1a1a1a;
+  color: white;
+  padding: 30px;
+}
+
+.matchInfo {
+  text-align: center;
+}
+
+.timerContainer {
+  margin-bottom: 30px;
+}
+
+.timer {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ff6b6b;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+}
+
+.timerLabel {
+  font-size: 1.1rem;
+  color: #ccc;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.teamsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.team {
+  flex: 1;
+  background: #2a2a2a;
+  border-radius: 10px;
+  padding: 20px;
+  border: 2px solid #444;
+}
+
+.teamTitle {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.playersList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: #333;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background: #444;
+  }
+}
+
+.playerAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #555;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.playerName {
+  flex: 1;
+  color: #fff;
+  font-weight: 500;
+}
+
+.playerLevel {
+  background: #667eea;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.vsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+
+.vs {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff6b6b;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, #ff6b6b, #ffa500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.confirmationStatus {
+  margin-bottom: 20px;
+}
+
+.statusText {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.progressBar {
+  width: 100%;
+  height: 20px;
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #555;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ecdc4, #44a08d);
+  transition: width 0.3s ease;
+  border-radius: 8px;
+}
+
+.confirmedMessage {
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.modalFooter {
+  background: #1a1a1a;
+  border: none;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.rejectBtn {
+  background: #dc3545;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.3s;
+  
+  &:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+  }
+  
+  &:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.confirmBtn {
+  background: #28a745;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.3s;
+  
+  &:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+  }
+  
+  &:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .teamsContainer {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .vsContainer {
+    min-width: auto;
+  }
+  
+  .vs {
+    font-size: 1.5rem;
+  }
+  
+  .timer {
+    font-size: 2.5rem;
+  }
+  
+  .modalFooter {
+    flex-direction: column;
+  }
+  
+  .rejectBtn,
+  .confirmBtn {
+    width: 100%;
+  }
+}

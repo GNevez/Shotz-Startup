@@ -2,7 +2,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import lobbySlice from "./lobbySlice";
-import storage from "redux-persist/lib/storage"; // localStorage
+import storage from "redux-persist/lib/storage"; // localStorae
 import {
   persistStore,
   persistReducer,
