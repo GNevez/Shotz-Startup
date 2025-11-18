@@ -14,6 +14,7 @@ import Error from "./components/Error.jsx";
 import Perfil from "./routes/Perfil/Perfil.jsx";
 import Ranking from "./routes/Ranking/Ranking.jsx";
 import Jogar from "./routes/Jogar/Jogar.jsx";
+import Game from "./routes/Game/Game.jsx";
 
 import Me from "./routes/Perfil/Me/Me.jsx";
 import Inventario from "./routes/Perfil/Inventario/Inventario.jsx";
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "/Jogar",
         element: <Jogar />,
+      },
+      {
+        path: "/game",
+        element: <Game />,
       },
       {
         path: "/auth",

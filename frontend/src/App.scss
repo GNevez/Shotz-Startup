@@ -1,0 +1,16 @@
+/* Layout base para sticky footer sem wrappers extras */
+html, body, #root {
+	height: 100%;
+}
+
+html, body {
+	margin: 0;
+}
+
+#root {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+/* O <footer> tem margin-top: auto no módulo para grudar no final */

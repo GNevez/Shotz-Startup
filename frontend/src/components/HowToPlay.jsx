@@ -12,9 +12,9 @@ const HowToPlay = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
-              <Squares mensagem='Realize seu login com discord para criar seu time, após isso vá até "Criar equipe", crie sua equipe e convide seus amigos!' />
-              <Squares mensagem="DALE" />
-              <Squares mensagem="DALE" />
+              <Squares mensagem='Realize seu login com discord' />
+              <Squares mensagem="Vá em Jogar Agora!" />
+              <Squares mensagem="Crie seu time convide seus amigos e busque a fila!" />
             </div>
             <div className="col-lg-6"></div>
           </div>

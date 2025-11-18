@@ -1,20 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import styles from "./MatchFound.module.scss";
 import socket from "../../../services/socket";
 import { useSelector } from "react-redux";
 
-const MatchFound = ({ show, onHide, matchData, onMatchConfirmed, onMatchRejected }) => {
+const MatchFound = ({
+  show,
+  onHide,
+  matchData,
+  onMatchConfirmed,
+  onMatchRejected,
+}) => {
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(30);
   const [confirmations, setConfirmations] = useState(0);
   const [hasConfirmed, setHasConfirmed] = useState(false);
+  const [totalPlayers, setTotalPlayers] = useState(10);
 
   useEffect(() => {
     if (show && matchData) {
       setTimeLeft(30);
       setConfirmations(0);
       setHasConfirmed(false);
+      // Definir o número total de jogadores dinamicamente
+      if (matchData.totalPlayers) {
+        setTotalPlayers(matchData.totalPlayers);
+      } else if (matchData.yourSala && matchData.opponentSala) {
+        const total =
+          (matchData.yourSala?.Players?.length || 0) +
+          (matchData.opponentSala?.Players?.length || 0);
+        setTotalPlayers(total);
+      }
     }
   }, [show, matchData]);
 
@@ -40,8 +58,13 @@ const MatchFound = ({ show, onHide, matchData, onMatchConfirmed, onMatchRejected
 
     const handleMatchConfirmed = (data) => {
       if (data.matchId === matchData?.matchId) {
+        console.log("Match confirmado! Redirecionando para o jogo...");
         onMatchConfirmed(data);
         onHide();
+
+        setTimeout(() => {
+          navigate("/game", { state: { matchData: data } });
+        }, 1500);
       }
     };
 
@@ -68,7 +91,7 @@ const MatchFound = ({ show, onHide, matchData, onMatchConfirmed, onMatchRejected
       socket.emit("confirmMatch", {
         matchId: matchData.matchId,
         salaId: matchData.salaId,
-        playerId: user.id
+        playerId: user.id,
       });
       setHasConfirmed(true);
     }
@@ -78,7 +101,7 @@ const MatchFound = ({ show, onHide, matchData, onMatchConfirmed, onMatchRejected
     if (matchData) {
       socket.emit("rejectMatch", {
         matchId: matchData.matchId,
-        salaId: matchData.salaId
+        salaId: matchData.salaId,
       });
       onMatchRejected(matchData);
       onHide();
@@ -98,19 +121,15 @@ const MatchFound = ({ show, onHide, matchData, onMatchConfirmed, onMatchRejected
     >
       <Modal.Header className={styles.modalHeader}>
         <Modal.Title className={styles.modalTitle}>
-          🎮 MATCH ENCONTRADO! 🎮
+          MATCH ENCONTRADO!
         </Modal.Title>
       </Modal.Header>
-      
+
       <Modal.Body className={styles.modalBody}>
         <div className={styles.matchInfo}>
           <div className={styles.timerContainer}>
-            <div className={styles.timer}>
-              {timeLeft}s
-            </div>
-            <div className={styles.timerLabel}>
-              Tempo para aceitar
-            </div>
+            <div className={styles.timer}>{timeLeft}s</div>
+            <div className={styles.timerLabel}>Tempo para aceitar</div>
           </div>
 
           <div className={styles.teamsContainer}>
@@ -151,12 +170,12 @@ const MatchFound = ({ show, onHide, matchData, onMatchConfirmed, onMatchRejected
 
           <div className={styles.confirmationStatus}>
             <div className={styles.statusText}>
-              Confirmações: {confirmations}/10
+              Confirmações: {confirmations}/{totalPlayers}
             </div>
             <div className={styles.progressBar}>
-              <div 
+              <div
                 className={styles.progressFill}
-                style={{ width: `${(confirmations / 10) * 100}%` }}
+                style={{ width: `${(confirmations / totalPlayers) * 100}%` }}
               />
             </div>
           </div>
@@ -176,7 +195,7 @@ const MatchFound = ({ show, onHide, matchData, onMatchConfirmed, onMatchRejected
           className={styles.rejectBtn}
           disabled={hasConfirmed}
         >
-          ❌ Rejeitar
+          Rejeitar
         </Button>
         <Button
           variant="success"
@@ -184,7 +203,7 @@ const MatchFound = ({ show, onHide, matchData, onMatchConfirmed, onMatchRejected
           className={styles.confirmBtn}
           disabled={hasConfirmed}
         >
-          ✅ {hasConfirmed ? 'Confirmado' : 'Aceitar Partida'}
+          {hasConfirmed ? "Confirmado" : "Aceitar Partida"}
         </Button>
       </Modal.Footer>
     </Modal>

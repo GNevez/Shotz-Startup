@@ -8,7 +8,8 @@ import SalaChat from "../../components/Jogar/SalaChat/SalaChat";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLobby } from "../../redux/lobbySlice";
 import { selectLobbys } from "../../redux/lobbySlice";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { useSearchParams } from "react-router-dom";
 
 import socket from "../../services/socket";
 
@@ -16,6 +17,7 @@ const Jogar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const salasList = useSelector(selectLobbys);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [isInRoom, setIsInRoom] = useState(false);
 
@@ -82,20 +84,48 @@ const Jogar = () => {
     const handleLobbys = (salas) => {
       dispatchSalas();
       dispatch(changeLobby(salas));
+      // Se ainda não temos a sala do usuário, tentar localizar diretamente
+      if (!yourRoom || !yourRoom.Sala) {
+        const found = salas.find((s) =>
+          s.Players?.some((p) => p.Id === user.id)
+        );
+        if (found) {
+          setYourRoom(found);
+          setIsInRoom(true);
+        }
+      }
     };
     const handlePlayerJoined = () => {
       fetchYourRoom();
       dispatchSalas();
     };
+    // Atualização em tempo real quando qualquer sala é atualizada
+    const handleAttSala = (sala) => {
+      if (sala?.Players?.some((p) => p.Id === user.id)) {
+        setYourRoom(sala);
+        setIsInRoom(true);
+      }
+    };
 
     const handleYourRoom = (data) => {
       console.log(data);
-      
+
       setYourRoom(data);
+    };
+
+    const handleLeftLobby = (data) => {
+      console.log("Usuário saiu da sala:", data);
+      if (data.success) {
+        setIsInRoom(false);
+        setYourRoom([]);
+        dispatchSalas();
+      }
     };
 
     socket.on("lobbys", handleLobbys);
     socket.on("playerJoined", handlePlayerJoined);
+    socket.on("leftLobby", handleLeftLobby);
+    socket.on("attSala", handleAttSala);
 
     console.log("teste: " + user.id);
 
@@ -124,8 +154,38 @@ const Jogar = () => {
     return () => {
       socket.off("lobbys", handleLobbys);
       socket.off("playerJoined", handlePlayerJoined);
+      socket.off("leftLobby", handleLeftLobby);
+      socket.off("attSala", handleAttSala);
     };
-  }, [user.id]);
+  }, [user.id, yourRoom?.Sala]);
+
+  // Detectar parâmetro 'sala' na URL e entrar automaticamente
+  useEffect(() => {
+    const salaParam = searchParams.get("sala");
+
+    if (salaParam && user && user.id && !isInRoom) {
+      console.log(`Detectado parâmetro sala na URL: ${salaParam}`);
+
+      // Verificar se a sala existe
+      const salaExists = salasList.find((s) => s.Sala === salaParam);
+
+      if (salaExists) {
+        console.log(`Entrando automaticamente na sala: ${salaParam}`);
+
+        // Emitir evento para entrar na sala
+        socket.emit("joinRoom", { Sala: salaParam, id: user.id });
+
+        toast.success(`Entrando na sala ${salaParam}...`);
+
+        // Remover parâmetro da URL
+        setSearchParams({});
+      } else {
+        console.log(`Sala ${salaParam} não encontrada`);
+        toast.error("Sala não encontrada ou não existe mais");
+        setSearchParams({});
+      }
+    }
+  }, [searchParams, user, salasList, isInRoom]);
 
   return (
     <>
@@ -137,7 +197,16 @@ const Jogar = () => {
           styles.containerMain
         }
       >
-        <div className="container justify-content-center d-flex">
+        <div className="container justify-content-center d-flex flex-column">
+          <div className={styles.header}>
+            <div className={"bg-white p-2 w-fit " + styles.titleContainer}>
+              <h2 className={styles.title}>Jogar</h2>
+            </div>
+            <p className={styles.subtitle}>
+              Encontre uma partida, crie um lobby ou ajuste os filtros para
+              achar o jogo ideal.
+            </p>
+          </div>
           <div className={"row " + styles.Row}>
             <div
               className={`${
@@ -145,7 +214,7 @@ const Jogar = () => {
               } col-lg-12  ${styles.menuPlay}`}
             >
               <div className={styles.row2 + " row"}>
-                <div className="col-lg-6 align-items-center d-flex gap-3">
+                <div className="col-lg-6 align-items-center d-flex gap-3 flex-wrap">
                   <button className={styles.logButton}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -352,7 +421,11 @@ const Jogar = () => {
                   <hr className={styles.hr} />
                   <div className="d-flex gap-4 align-items-center justify-content-center">
                     <p className={styles.skillLevel}>Pesquisar Salas:</p>{" "}
-                    <input type="text" className={styles.searchRooms} />
+                    <input
+                      type="text"
+                      className={styles.searchRooms}
+                      placeholder="Digite o nome da sala"
+                    />
                   </div>
                 </div>
               </div>

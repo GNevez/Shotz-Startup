@@ -12,11 +12,11 @@ const Home = () => {
           alt=""
         />
         <h1 className={styles.mainText}>
-          O seu servidor <strong> competitivo </strong> de Arena!
+          Mostre suas <strong> habilidades </strong> na bala!
         </h1>
         <p className={styles.subText}>
           Monte seu time e venha disputar com os <strong> melhores </strong> do
-          cenário!
+          cenário de <strong>VALORANT</strong>!
         </p>
         <img
           className={styles.background}

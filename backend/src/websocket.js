@@ -73,75 +73,98 @@ function addToQueue(sala) {
 
 // Função para encontrar match entre salas
 function findMatch() {
-  const waitingSalas = queue.filter(entry => entry.status === 'waiting');
+  const waitingSalas = queue.filter((entry) => entry.status === "waiting");
   console.log(`Procurando match... Salas na fila: ${waitingSalas.length}`);
-  console.log("Fila atual:", queue.map(q => ({ sala: q.sala.Sala, status: q.status })));
-  
+  console.log(
+    "Fila atual:",
+    queue.map((q) => ({ sala: q.sala.Sala, status: q.status }))
+  );
+
   if (waitingSalas.length >= 2) {
     // Pegar as duas primeiras salas da fila
     const sala1 = waitingSalas[0];
     const sala2 = waitingSalas[1];
-    
+
     // Criar match
     const match = {
       id: `match_${Date.now()}`,
       sala1: sala1.sala,
       sala2: sala2.sala,
-      status: 'pending_confirmation', // pending_confirmation, confirmed, rejected
+      status: "pending_confirmation", // pending_confirmation, confirmed, rejected
       timestamp: Date.now(),
       confirmations: {
         sala1: [],
-        sala2: []
-      }
+        sala2: [],
+      },
     };
-    
+
     // Atualizar status das salas na fila
-    sala1.status = 'matched';
-    sala2.status = 'matched';
-    
+    sala1.status = "matched";
+    sala2.status = "matched";
+
     // Remover da fila
-    const index1 = queue.findIndex(entry => entry.sala.Sala === sala1.sala.Sala);
-    const index2 = queue.findIndex(entry => entry.sala.Sala === sala2.sala.Sala);
-    
+    const index1 = queue.findIndex(
+      (entry) => entry.sala.Sala === sala1.sala.Sala
+    );
+    const index2 = queue.findIndex(
+      (entry) => entry.sala.Sala === sala2.sala.Sala
+    );
+
     if (index1 !== -1) queue.splice(index1, 1);
     if (index2 !== -1) queue.splice(index2, 1);
-    
+
     // Adicionar ao array de matches
     matches.push(match);
-    
+
     console.log(`Match encontrado: ${sala1.sala.Sala} vs ${sala2.sala.Sala}`);
-    
+
     // Emitir evento de match encontrado para ambas as salas
+    const totalPlayers = sala1.sala.Players.length + sala2.sala.Players.length;
+
     const matchData1 = {
       matchId: match.id,
+      salaId: sala1.sala.Sala,
+      yourSala: sala1.sala,
       opponentSala: sala2.sala,
-      timeToAccept: 30 // 30 segundos para aceitar
+      timeToAccept: 30, // 30 segundos para aceitar
+      totalPlayers: totalPlayers,
     };
-    
+
     const matchData2 = {
       matchId: match.id,
+      salaId: sala2.sala.Sala,
+      yourSala: sala2.sala,
       opponentSala: sala1.sala,
-      timeToAccept: 30
+      timeToAccept: 30,
+      totalPlayers: totalPlayers,
     };
-    
+
     console.log("Emitindo matchFound para sala1:", sala1.sala.Sala, matchData1);
     console.log("Emitindo matchFound para sala2:", sala2.sala.Sala, matchData2);
-    
+
     // Verificar se as salas estão conectadas
     const room1Clients = io.sockets.adapter.rooms.get(sala1.sala.Sala);
     const room2Clients = io.sockets.adapter.rooms.get(sala2.sala.Sala);
-    
-    console.log(`Sala1 ${sala1.sala.Sala} tem ${room1Clients ? room1Clients.size : 0} clientes conectados`);
-    console.log(`Sala2 ${sala2.sala.Sala} tem ${room2Clients ? room2Clients.size : 0} clientes conectados`);
-    
-    io.to(sala1.sala.Sala).emit('matchFound', matchData1);
-    io.to(sala2.sala.Sala).emit('matchFound', matchData2);
-    
+
+    console.log(
+      `Sala1 ${sala1.sala.Sala} tem ${
+        room1Clients ? room1Clients.size : 0
+      } clientes conectados`
+    );
+    console.log(
+      `Sala2 ${sala2.sala.Sala} tem ${
+        room2Clients ? room2Clients.size : 0
+      } clientes conectados`
+    );
+
+    io.to(sala1.sala.Sala).emit("matchFound", matchData1);
+    io.to(sala2.sala.Sala).emit("matchFound", matchData2);
+
     console.log("✅ Eventos matchFound emitidos!");
-    
+
     // Timer para rejeitar automaticamente se não confirmar
     setTimeout(() => {
-      if (match.status === 'pending_confirmation') {
+      if (match.status === "pending_confirmation") {
         rejectMatch(match.id);
       }
     }, 30000); // 30 segundos
@@ -150,10 +173,10 @@ function findMatch() {
 
 // Função para confirmar match
 function confirmMatch(matchId, salaId, playerId) {
-  const match = matches.find(m => m.id === matchId);
-  
+  const match = matches.find((m) => m.id === matchId);
+
   if (!match) return false;
-  
+
   if (match.sala1.Sala === salaId) {
     if (!match.confirmations.sala1.includes(playerId)) {
       match.confirmations.sala1.push(playerId);
@@ -163,120 +186,145 @@ function confirmMatch(matchId, salaId, playerId) {
       match.confirmations.sala2.push(playerId);
     }
   }
-  
-  // Verificar se todos os 10 jogadores confirmaram
-  const totalConfirmations = match.confirmations.sala1.length + match.confirmations.sala2.length;
-  
-  if (totalConfirmations === 10) {
-    match.status = 'confirmed';
-    console.log(`Match ${matchId} confirmado por todos os jogadores!`);
-    
-    // Emitir evento de match confirmado
-    io.to(match.sala1.Sala).emit('matchConfirmed', { matchId });
-    io.to(match.sala2.Sala).emit('matchConfirmed', { matchId });
-    
+
+  // Verificar se todos os jogadores confirmaram (número dinâmico)
+  const totalConfirmations =
+    match.confirmations.sala1.length + match.confirmations.sala2.length;
+  const totalPlayers = match.sala1.Players.length + match.sala2.Players.length;
+
+  if (totalConfirmations === totalPlayers) {
+    match.status = "confirmed";
+    console.log(
+      `Match ${matchId} confirmado por todos os ${totalPlayers} jogadores!`
+    );
+
+    // Emitir evento de match confirmado com dados completos
+    const confirmData = {
+      matchId,
+      sala1: match.sala1,
+      sala2: match.sala2,
+      totalPlayers,
+    };
+
+    io.to(match.sala1.Sala).emit("matchConfirmed", confirmData);
+    io.to(match.sala2.Sala).emit("matchConfirmed", confirmData);
+
     // Aqui você pode iniciar a partida, redirecionar para o jogo, etc.
     startMatch(match);
   }
-  
+
   return true;
 }
 
 // Função para rejeitar match
 function rejectMatch(matchId) {
-  const match = matches.find(m => m.id === matchId);
-  
+  const match = matches.find((m) => m.id === matchId);
+
   if (!match) return false;
-  
-  match.status = 'rejected';
-  
+
+  match.status = "rejected";
+
   // Voltar as salas para a fila apenas se não estiverem já na fila
-  const sala1InQueue = queue.find(entry => entry.sala.Sala === match.sala1.Sala);
-  const sala2InQueue = queue.find(entry => entry.sala.Sala === match.sala2.Sala);
-  
+  const sala1InQueue = queue.find(
+    (entry) => entry.sala.Sala === match.sala1.Sala
+  );
+  const sala2InQueue = queue.find(
+    (entry) => entry.sala.Sala === match.sala2.Sala
+  );
+
   if (!sala1InQueue) {
     addToQueue(match.sala1);
   }
   if (!sala2InQueue) {
     addToQueue(match.sala2);
   }
-  
+
   // Emitir evento de match rejeitado
-  io.to(match.sala1.Sala).emit('matchRejected', { matchId });
-  io.to(match.sala2.Sala).emit('matchRejected', { matchId });
-  
+  io.to(match.sala1.Sala).emit("matchRejected", { matchId });
+  io.to(match.sala2.Sala).emit("matchRejected", { matchId });
+
   // Remover do array de matches
-  const index = matches.findIndex(m => m.id === matchId);
+  const index = matches.findIndex((m) => m.id === matchId);
   if (index !== -1) matches.splice(index, 1);
-  
+
   console.log(`Match ${matchId} rejeitado`);
   return true;
 }
 
 // Função para rejeitar match por um time específico
 function rejectMatchByTeam(matchId, salaId) {
-  const match = matches.find(m => m.id === matchId);
-  
+  const match = matches.find((m) => m.id === matchId);
+
   if (!match) return false;
-  
+
   console.log(`Time ${salaId} rejeitou o match ${matchId}`);
-  
+
   // Determinar qual sala rejeitou
   const isSala1 = match.sala1.Sala === salaId;
   const rejectingSala = isSala1 ? match.sala1 : match.sala2;
   const acceptingSala = isSala1 ? match.sala2 : match.sala1;
-  
+
   // Remover o match
-  const index = matches.findIndex(m => m.id === matchId);
+  const index = matches.findIndex((m) => m.id === matchId);
   if (index !== -1) matches.splice(index, 1);
-  
+
   // Remover a sala que rejeitou da fila
-  const rejectingSalaInQueue = queue.find(entry => entry.sala.Sala === rejectingSala.Sala);
+  const rejectingSalaInQueue = queue.find(
+    (entry) => entry.sala.Sala === rejectingSala.Sala
+  );
   if (rejectingSalaInQueue) {
-    const queueIndex = queue.findIndex(entry => entry.sala.Sala === rejectingSala.Sala);
+    const queueIndex = queue.findIndex(
+      (entry) => entry.sala.Sala === rejectingSala.Sala
+    );
     if (queueIndex !== -1) {
       queue.splice(queueIndex, 1);
-      console.log(`Sala ${rejectingSala.Sala} removida da fila por rejeitar match`);
+      console.log(
+        `Sala ${rejectingSala.Sala} removida da fila por rejeitar match`
+      );
     }
   }
-  
+
   // Manter a sala que aceitou na fila (se não estiver já)
-  const acceptingSalaInQueue = queue.find(entry => entry.sala.Sala === acceptingSala.Sala);
+  const acceptingSalaInQueue = queue.find(
+    (entry) => entry.sala.Sala === acceptingSala.Sala
+  );
   if (!acceptingSalaInQueue) {
     addToQueue(acceptingSala);
-    console.log(`Sala ${acceptingSala.Sala} mantida na fila após rejeição do oponente`);
+    console.log(
+      `Sala ${acceptingSala.Sala} mantida na fila após rejeição do oponente`
+    );
   }
-  
+
   // Emitir eventos específicos
-  io.to(rejectingSala.Sala).emit('matchRejectedByYou', { 
-    matchId, 
-    message: "Você rejeitou a partida e saiu da fila"
+  io.to(rejectingSala.Sala).emit("matchRejectedByYou", {
+    matchId,
+    message: "Você rejeitou a partida e saiu da fila",
   });
-  
-  io.to(acceptingSala.Sala).emit('matchRejectedByOpponent', { 
-    matchId, 
-    message: "Oponente rejeitou a partida. Continuando a procurar..." 
+
+  io.to(acceptingSala.Sala).emit("matchRejectedByOpponent", {
+    matchId,
+    message: "Oponente rejeitou a partida. Continuando a procurar...",
   });
-  
+
   return true;
 }
 
 // Função para iniciar a partida
 function startMatch(match) {
   console.log(`Iniciando partida: ${match.sala1.Sala} vs ${match.sala2.Sala}`);
-  
+
   // Aqui você pode implementar a lógica para iniciar o jogo
   // Por exemplo: criar uma instância do jogo, definir mapa, etc.
-  
+
   // Emitir evento de partida iniciada
-  io.to(match.sala1.Sala).emit('gameStarted', { 
+  io.to(match.sala1.Sala).emit("gameStarted", {
     matchId: match.id,
-    opponentSala: match.sala2 
+    opponentSala: match.sala2,
   });
-  
-  io.to(match.sala2.Sala).emit('gameStarted', { 
+
+  io.to(match.sala2.Sala).emit("gameStarted", {
     matchId: match.id,
-    opponentSala: match.sala1 
+    opponentSala: match.sala1,
   });
 }
 
@@ -369,35 +417,61 @@ io.on("connection", (socket) => {
   });
 
   socket.on("messageChat", (data) => {
-    let roomFound = false;
+    try {
+      const { salaId, id, user, text } = data;
+      if (!text || !String(text).trim()) return;
 
-    for (const item of salas) {
-      const player = item.Players.find((player) => player.Id === data.id);
+      if (salaId) {
+        const sala = salas.find((s) => s.Sala === salaId);
+        if (!sala) {
+          console.log(`Sala ${salaId} não encontrada para mensagem de chat`);
+          return;
+        }
 
-      if (player) {
-        roomFound = true;
-        const room = item.Sala;
+        const isMember = sala.Players.some((p) => p.Id === id);
+        if (!isMember) {
+          console.log(
+            `Usuário ${id} não pertence à sala ${salaId} (chat ignorado)`
+          );
+          return;
+        }
 
         const message = {
-          room: room,
-          user: data.user,
-          text: data.text,
+          room: sala.Sala,
+          user,
+          text: String(text).slice(0, 500),
           createdAt: new Date(),
         };
 
         mensagensChat.push(message);
-        console.log(`Mensagem para a sala ${room}:`, message);
-
-        // Emitir mensagem para a sala correta
-        io.to(room).emit("messageChat", message);
-
-        console.log(mensagensChat);
-        break;
+        io.to(sala.Sala).emit("messageChat", message);
+        return;
       }
-    }
 
-    if (!roomFound) {
-      console.log(`Nenhuma sala encontrada para o jogador com ID ${data.id}`);
+      let roomFound = false;
+      for (const item of salas) {
+        const player = item.Players.find((player) => player.Id === id);
+
+        if (player) {
+          roomFound = true;
+          const message = {
+            room: item.Sala,
+            user,
+            text: String(text).slice(0, 500),
+            createdAt: new Date(),
+          };
+
+          mensagensChat.push(message);
+          io.to(item.Sala).emit("messageChat", message);
+          break;
+        }
+      }
+
+      if (!roomFound) {
+        console.log(`Nenhuma sala encontrada para o jogador com ID ${id}`);
+      }
+    } catch (err) {
+      console.error("Erro ao processar messageChat:", err);
     }
   });
 
@@ -407,68 +481,109 @@ io.on("connection", (socket) => {
     console.log("=== JOIN QUEUE ===");
     console.log("SalaId recebido:", salaId);
     console.log("Socket ID:", socket.id);
-    console.log("Salas disponíveis:", salas.map(s => s.Sala));
-    
+    console.log(
+      "Salas disponíveis:",
+      salas.map((s) => s.Sala)
+    );
+
     // Encontrar a sala
-    const sala = salas.find(s => s.Sala === salaId);
+    const sala = salas.find((s) => s.Sala === salaId);
     console.log("Sala encontrada:", sala ? "SIM" : "NÃO");
-    
+
     if (sala) {
-      // Garantir que o socket está conectado à sala
-      socket.join(salaId);
-      console.log(`Socket ${socket.id} conectado à sala ${salaId}`);
-      
-      // Verificar se está conectado
+      // Garantir que todos os sockets da sala estão conectados
       const roomClients = io.sockets.adapter.rooms.get(salaId);
-      console.log(`Sala ${salaId} agora tem ${roomClients ? roomClients.size : 0} clientes`);
-      
+      if (!roomClients || roomClients.size === 0) {
+        // Conectar todos os players da sala
+        sala.Players.forEach((player) => {
+          socket.join(salaId);
+        });
+      }
+
+      console.log(`Socket ${socket.id} conectado à sala ${salaId}`);
+
+      // Verificar se está conectado
+      const updatedRoomClients = io.sockets.adapter.rooms.get(salaId);
+      console.log(
+        `Sala ${salaId} agora tem ${
+          updatedRoomClients ? updatedRoomClients.size : 0
+        } clientes`
+      );
+
       console.log("Adicionando sala à fila:", sala.Sala);
       addToQueue(sala);
-      
-      // Emitir confirmação para a sala
+
+      // Emitir confirmação para TODA a sala (todos os membros)
       io.to(salaId).emit("queueJoined", {
         message: "Sala adicionada à fila de matchmaking",
-        position: queue.length
+        position: queue.length,
+        inQueue: true,
       });
-      console.log("Confirmação enviada para sala:", salaId);
+      console.log("Confirmação enviada para toda a sala:", salaId);
     } else {
       console.log("Sala não encontrada!");
       socket.emit("queueError", {
-        message: "Sala não está completa ou não encontrada"
+        message: "Sala não está completa ou não encontrada",
       });
+    }
+  });
+
+  // Evento para sair da fila
+  socket.on("leaveQueue", (data) => {
+    const { salaId } = data;
+    console.log(`=== LEAVE QUEUE ===`);
+    console.log(`SalaId: ${salaId}`);
+
+    // Remover da fila
+    const queueIndex = queue.findIndex((entry) => entry.sala.Sala === salaId);
+
+    if (queueIndex !== -1) {
+      queue.splice(queueIndex, 1);
+      console.log(`Sala ${salaId} removida da fila`);
+
+      // Confirmar para TODA a sala (todos os membros)
+      io.to(salaId).emit("queueLeft", {
+        message: "Você saiu da fila de matchmaking",
+        inQueue: false,
+      });
+    } else {
+      console.log(`Sala ${salaId} não estava na fila`);
     }
   });
 
   // Evento para confirmar match
   socket.on("confirmMatch", (data) => {
     const { matchId, salaId, playerId } = data;
-    
+
     const success = confirmMatch(matchId, salaId, playerId);
-    
+
     if (success) {
       // Emitir confirmação individual
       socket.emit("matchConfirmationReceived", { matchId, playerId });
-      
+
       // Emitir atualização para a sala
-      const match = matches.find(m => m.id === matchId);
+      const match = matches.find((m) => m.id === matchId);
       if (match) {
-        const totalConfirmations = match.confirmations.sala1.length + match.confirmations.sala2.length;
-        
+        const totalConfirmations =
+          match.confirmations.sala1.length + match.confirmations.sala2.length;
+        const totalPlayers =
+          match.sala1.Players.length + match.sala2.Players.length;
+
         io.to(match.sala1.Sala).emit("matchUpdate", {
           matchId,
           confirmations: totalConfirmations,
-          total: 10
+          total: totalPlayers,
         });
-        
+
         io.to(match.sala2.Sala).emit("matchUpdate", {
           matchId,
           confirmations: totalConfirmations,
-          total: 10
+          total: totalPlayers,
         });
       }
     } else {
       socket.emit("matchError", {
-        message: "Erro ao confirmar match"
+        message: "Erro ao confirmar match",
       });
     }
   });
@@ -476,13 +591,76 @@ io.on("connection", (socket) => {
   // Evento para rejeitar match
   socket.on("rejectMatch", (data) => {
     const { matchId, salaId } = data;
-    
+
     // Usar a nova função que remove apenas o time que rejeitou
     const success = rejectMatchByTeam(matchId, salaId);
-    
+
     if (!success) {
       socket.emit("matchError", {
-        message: "Erro ao rejeitar match"
+        message: "Erro ao rejeitar match",
+      });
+    }
+  });
+
+  // Evento para sair da sala
+  socket.on("leaveLobby", (data) => {
+    const { salaId, userId } = data;
+    console.log(`Usuário ${userId} tentando sair da sala ${salaId}`);
+
+    // Encontrar a sala
+    const salaIndex = salas.findIndex((sala) => sala.Sala === salaId);
+
+    if (salaIndex !== -1) {
+      const sala = salas[salaIndex];
+
+      // Remover o jogador da sala
+      const playerIndex = sala.Players.findIndex(
+        (player) => player.Id === userId
+      );
+
+      if (playerIndex !== -1) {
+        sala.Players.splice(playerIndex, 1);
+        console.log(`Jogador ${userId} removido da sala ${salaId}`);
+
+        // Se a sala ficou vazia, remover a sala
+        if (sala.Players.length === 0) {
+          salas.splice(salaIndex, 1);
+          console.log(`Sala ${salaId} removida (vazia)`);
+
+          // Remover da fila se estiver nela
+          const queueIndex = queue.findIndex(
+            (entry) => entry.sala.Sala === salaId
+          );
+          if (queueIndex !== -1) {
+            queue.splice(queueIndex, 1);
+            console.log(`Sala ${salaId} removida da fila`);
+          }
+        } else {
+          // Se ainda há jogadores, atualizar a sala para todos
+          io.to(salaId).emit("attSala", sala);
+        }
+
+        // Fazer o socket sair da sala
+        socket.leave(salaId);
+
+        // Confirmar para o usuário que saiu
+        socket.emit("leftLobby", {
+          success: true,
+          message: "Você saiu da sala com sucesso",
+        });
+
+        // Atualizar lista de lobbys para todos
+        io.emit("lobbys", salas);
+      } else {
+        socket.emit("leftLobby", {
+          success: false,
+          message: "Jogador não encontrado na sala",
+        });
+      }
+    } else {
+      socket.emit("leftLobby", {
+        success: false,
+        message: "Sala não encontrada",
       });
     }
   });

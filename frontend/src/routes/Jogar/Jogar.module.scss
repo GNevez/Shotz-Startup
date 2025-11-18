@@ -9,15 +9,11 @@ $secondary: #141414;
 }
 
 .containerMain{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: none;
+    position: relative;
     width: 100%;
-    height: 100%;
-    min-height: 800px;
+    min-height: 1000px;
     background: #141414;
+    padding: 40px 0 80px; /* espaço inferior para não encostar no footer */
 }
 
 .Row{
@@ -26,28 +22,31 @@ $secondary: #141414;
 
 .menuPlay{
     width: 100%;
-    height: 120px;
+    height: 140px;
     position: relative;
-    top: 20%;
-    background-color: $background-transp;
-    border: 1px solid rgba(114, 114, 114, 0.466);
+    background: rgba(27,27,27,0.6);
+    border: 1px solid rgba(114, 114, 114, 0.35);
     display: flex;
     flex-direction: column;
     justify-content: start;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    backdrop-filter: blur(6px);
+    padding: 10px 16px 16px;
 }
 
 .menuPlay1{
-    height: 120px;
+    height: 140px;
 }
 
 .menuPlay2{
-    height: 300px;
+    height: 340px;
 }
 
 .row2{
     width: 100%;
-    margin-top: 20px;
+    margin-top: 6px;
 }
 
 .logButton{
@@ -60,6 +59,9 @@ $secondary: #141414;
     align-items: center;
     padding: 20px;
     transform: skew(-20deg);
+    border-radius: 6px;
+    box-shadow: 0 6px 16px rgba(230,49,49,0.25);
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 
 .logButton p{
@@ -77,6 +79,12 @@ $secondary: #141414;
     transform: skew(20deg);
 }
 
+.logButton:hover{
+    filter: brightness(1.05);
+    transform: translateY(-1px) skew(-20deg);
+    box-shadow: 0 10px 22px rgba(230,49,49,0.35);
+}
+
 .skillLevel{
     display: flex;
     color: #fff;
@@ -91,6 +99,7 @@ $secondary: #141414;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 8px;
 }
 
 .colMenu p {
@@ -183,6 +192,7 @@ $secondary: #141414;
     justify-content: end;
     width: 100%;
     margin-top: 20px;
+        overflow: hidden;
   }
 
   .opacity0{
@@ -206,6 +216,8 @@ $secondary: #141414;
     padding: 20px;
     transform: skew(-20deg);
     text-align: center;
+    border-radius: 6px;
+    transition: background .2s ease, border-color .2s ease, color .2s ease;
 }
 
 .filterBtn2{
@@ -219,6 +231,8 @@ $secondary: #141414;
     padding: 20px;
     transform: skew(-20deg);
     text-align: center;
+    border-radius: 6px;
+    box-shadow: 0 6px 16px rgba(230,49,49,0.25);
 }
 
 .filterBtn p{
@@ -250,6 +264,8 @@ $secondary: #141414;
     color: #fff;
     font-size: 15px;
     font-weight: 500;
+    border-radius: 6px;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
 }
 
 .skillBtn2{
@@ -265,6 +281,8 @@ $secondary: #141414;
     color: #fff;
     font-size: 15px;
     font-weight: 500;
+    border-radius: 6px;
+    box-shadow: 0 6px 16px rgba(230,49,49,0.25);
 }
 
 .skillBtn p {
@@ -315,14 +333,18 @@ $secondary: #141414;
 }
 
 .searchRooms{
-    background-color: #141414;
+    background-color: #1b1b1b;
     border: 1px solid #63636367;
     color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    min-width: 240px;
 }
 
 .searchRooms:focus{
     outline: none; 
     border: 1px solid #e63131;
+    box-shadow: 0 0 0 3px rgba(230,49,49,0.15);
 }
 
 .slider{
@@ -330,6 +352,27 @@ $secondary: #141414;
     width: 300px;
     background-color: #e63131;
     border-radius: 5px;
+    height: 6px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #e63131;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #e63131;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
 
 .levelSkill{
@@ -349,6 +392,47 @@ $secondary: #141414;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.header{
+        width: 100%;
+        margin-bottom: 16px;
+}
+
+.titleContainer{
+    width: fit-content;
+    transform: skew(-20deg);
+    border-radius: 6px;
+    box-shadow: 0 6px 16px rgba(199, 199, 199, 0.25);
+    margin-bottom: 10px;
+}
+
+.title{
+        color: #e63131;
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        transform: skew(20deg);
+        padding-right: 10px;
+        padding-left: 10px;
+}
+
+.subtitle{
+        color: #bfbfbf;
+        font-size: 14px;
+        margin: 0 0 12px 0;
+}
+
+@media (max-width: 992px) {
+    .menuPlay {
+        padding: 12px;
+    }
+    .slider { width: 240px; }
+}
+
+@media (max-width: 576px) {
+    .logButton { width: 100%; }
+    .slider { width: 100%; }
 }
 
 

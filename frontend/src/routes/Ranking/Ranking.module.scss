@@ -1,0 +1,426 @@
+$primary: #e63131;
+
+.rankingContainer {
+  min-height: 100vh;
+  padding: 120px 20px 80px;
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.98), rgba(30, 30, 30, 0.95));
+  position: relative;
+  overflow-x: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba($primary, 0.08), transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 0.03), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.contentWrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+
+  .title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, $primary, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    text-shadow: 0 0 40px rgba($primary, 0.3);
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+  }
+}
+
+.tabsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.tabButton {
+  padding: 14px 32px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(40, 40, 40, 0.6), rgba(30, 30, 30, 0.6));
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba($primary, 0.4);
+    box-shadow: 0 6px 20px rgba($primary, 0.15);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, $primary, #d62828);
+    border-color: $primary;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba($primary, 0.4);
+    transform: translateY(-2px);
+  }
+}
+
+.rankingList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rankingCard {
+  display: flex;
+  align-items: center;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(35, 35, 35, 0.8), rgba(25, 25, 25, 0.8));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  gap: 20px;
+
+  &:hover {
+    transform: translateX(6px);
+    border-color: rgba($primary, 0.3);
+    box-shadow: 0 6px 25px rgba($primary, 0.15);
+  }
+
+  &.top1 {
+    border: 2px solid #ffd700;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(35, 35, 35, 0.8));
+    box-shadow: 0 6px 25px rgba(255, 215, 0, 0.2);
+
+    .position {
+      color: #ffd700;
+      font-size: 2rem;
+    }
+  }
+
+  &.top2 {
+    border: 2px solid #c0c0c0;
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.1), rgba(35, 35, 35, 0.8));
+    box-shadow: 0 6px 25px rgba(192, 192, 192, 0.15);
+
+    .position {
+      color: #c0c0c0;
+      font-size: 1.8rem;
+    }
+  }
+
+  &.top3 {
+    border: 2px solid #cd7f32;
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.1), rgba(35, 35, 35, 0.8));
+    box-shadow: 0 6px 25px rgba(205, 127, 50, 0.15);
+
+    .position {
+      color: #cd7f32;
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.position {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 50px;
+  text-align: center;
+}
+
+.entityInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+
+    .nameRow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      .name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0;
+      }
+
+      .badge {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid;
+        flex-shrink: 0;
+
+        &.prime {
+          background: linear-gradient(135deg, #ffd700, #ffed4e);
+          border-color: #ffd700;
+        }
+
+        &.verified {
+          background: linear-gradient(135deg, #4169e1, #6495ed);
+          border-color: #4169e1;
+        }
+      }
+    }
+
+    .team {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+    }
+  }
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    .statLabel {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .statValue {
+      font-size: 1.1rem;
+      color: #ffffff;
+      font-weight: 700;
+
+      &.primary {
+        color: $primary;
+        font-size: 1.3rem;
+      }
+
+      &.positive {
+        color: #4caf50;
+      }
+    }
+  }
+}
+
+.prize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, rgba($primary, 0.15), rgba($primary, 0.05));
+  border: 1px solid rgba($primary, 0.3);
+  border-radius: 10px;
+  min-width: 120px;
+
+  .prizeLabel {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .prizeValue {
+    font-size: 1.3rem;
+    color: $primary;
+    font-weight: 800;
+  }
+}
+
+@media (max-width: 1024px) {
+  .stats {
+    gap: 16px;
+  }
+
+  .statItem {
+    .statLabel {
+      font-size: 0.7rem;
+    }
+
+    .statValue {
+      font-size: 1rem;
+
+      &.primary {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .prize {
+    min-width: 100px;
+    padding: 10px 16px;
+
+    .prizeValue {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .rankingContainer {
+    padding: 30px 15px 60px;
+  }
+
+  .header {
+    .title {
+      font-size: 2.2rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .tabsContainer {
+    gap: 10px;
+  }
+
+  .tabButton {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+
+  .rankingCard {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 16px;
+
+    &:hover {
+      transform: translateY(-4px) translateX(0);
+    }
+  }
+
+  .position {
+    font-size: 1.3rem;
+    min-width: auto;
+  }
+
+  .entityInfo {
+    width: 100%;
+
+    .avatar,
+    .logo {
+      width: 50px;
+      height: 50px;
+    }
+
+    .details {
+      .nameRow {
+        .name {
+          font-size: 1.1rem;
+        }
+
+        .badge {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .team {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .stats {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .prize {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    .title {
+      font-size: 1.8rem;
+    }
+  }
+
+  .tabButton {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    .statItem {
+      flex-direction: row;
+      gap: 8px;
+
+      .statLabel {
+        font-size: 0.75rem;
+      }
+
+      .statValue {
+        font-size: 1rem;
+      }
+    }
+  }
+}

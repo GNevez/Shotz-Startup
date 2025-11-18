@@ -1,28 +1,84 @@
+$primary: #e63131;
+$secondary: #141414;
+$background: #1a1a1a;
+
 .matchModal {
-  .modal-dialog {
-    max-width: 800px;
+  :global(.modal-dialog) {
+    max-width: 900px;
+    margin: 1.75rem auto;
+  }
+  
+  :global(.modal-content) {
+    background: transparent;
+    border: none;
+    box-shadow: 0 0 40px rgba(230, 49, 49, 0.3);
   }
 }
 
 .modalHeader {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, $primary 0%, #c91f1f 100%);
   border: none;
   color: white;
   text-align: center;
-  padding: 20px;
+  padding: 25px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    animation: shine 3s infinite;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
 }
 
 .modalTitle {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 700;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+  animation: titlePulse 2s infinite;
+}
+
+@keyframes titlePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .modalBody {
-  background: #1a1a1a;
+  background: $secondary;
   color: white;
-  padding: 30px;
+  padding: 35px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .matchInfo {
@@ -30,76 +86,133 @@
 }
 
 .timerContainer {
-  margin-bottom: 30px;
+  margin-bottom: 35px;
+  animation: fadeInDown 0.5s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .timer {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #ff6b6b;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff6b6b 0%, $primary 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(230, 49, 49, 0.5);
   margin-bottom: 10px;
+  animation: timerPulse 1s infinite;
+}
+
+@keyframes timerPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+  }
 }
 
 .timerLabel {
-  font-size: 1.1rem;
-  color: #ccc;
+  font-size: 1rem;
+  color: #aaa;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  font-weight: 600;
 }
 
 .teamsContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
-  gap: 20px;
+  margin-bottom: 35px;
+  gap: 25px;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .team {
   flex: 1;
-  background: #2a2a2a;
-  border-radius: 10px;
-  padding: 20px;
-  border: 2px solid #444;
+  background: linear-gradient(135deg, rgba(230, 49, 49, 0.1) 0%, rgba(230, 49, 49, 0.05) 100%);
+  border-radius: 15px;
+  padding: 25px;
+  border: 2px solid rgba(230, 49, 49, 0.3);
+  box-shadow: 0 4px 15px rgba(230, 49, 49, 0.2);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(230, 49, 49, 0.4);
+    border-color: $primary;
+  }
 }
 
 .teamTitle {
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 15px;
+  color: $primary;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(230, 49, 49, 0.5);
 }
 
 .playersList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .player {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px;
-  background: #333;
-  border-radius: 5px;
-  transition: background-color 0.2s;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   
   &:hover {
-    background: #444;
+    background: rgba(230, 49, 49, 0.2);
+    border-color: $primary;
+    transform: translateX(5px);
   }
 }
 
 .playerAvatar {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid #555;
+  border: 2px solid $primary;
+  box-shadow: 0 0 10px rgba(230, 49, 49, 0.5);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(230, 49, 49, 0.8);
+  }
   
   img {
     width: 100%;
@@ -111,159 +224,353 @@
 .playerName {
   flex: 1;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .playerLevel {
-  background: #667eea;
+  background: linear-gradient(135deg, $primary 0%, #c91f1f 100%);
   color: white;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.8rem;
-  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(230, 49, 49, 0.4);
+  min-width: 35px;
+  text-align: center;
 }
 
 .vsContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 80px;
+  min-width: 100px;
 }
 
 .vs {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ff6b6b;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(45deg, #ff6b6b, #ffa500);
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, $primary 0%, #ff6b6b 50%, $primary 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 0 20px rgba(230, 49, 49, 0.8);
+  animation: vsAnimation 2s infinite;
+  position: relative;
+  
+  &::before,
+  &::after {
+    content: '⚔️';
+    position: absolute;
+    font-size: 1.5rem;
+    animation: swordAnimation 1.5s infinite;
+  }
+  
+  &::before {
+    top: -20px;
+    left: -30px;
+  }
+  
+  &::after {
+    bottom: -20px;
+    right: -30px;
+    animation-delay: 0.75s;
+  }
+}
+
+@keyframes vsAnimation {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+  }
+}
+
+@keyframes swordAnimation {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }
 
 .confirmationStatus {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .statusText {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #fff;
-  margin-bottom: 10px;
-  font-weight: 500;
+  margin-bottom: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .progressBar {
   width: 100%;
-  height: 20px;
-  background: #333;
-  border-radius: 10px;
+  height: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
   overflow: hidden;
-  border: 2px solid #555;
+  border: 2px solid rgba(230, 49, 49, 0.3);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+    border-radius: 15px 15px 0 0;
+  }
 }
 
 .progressFill {
   height: 100%;
-  background: linear-gradient(90deg, #4ecdc4, #44a08d);
-  transition: width 0.3s ease;
-  border-radius: 8px;
+  background: linear-gradient(90deg, $primary 0%, #ff6b6b 50%, $primary 100%);
+  background-size: 200% 100%;
+  animation: progressAnimation 2s infinite;
+  transition: width 0.5s ease;
+  border-radius: 13px;
+  box-shadow: 0 0 15px rgba(230, 49, 49, 0.6);
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+    border-radius: 13px 13px 0 0;
+  }
+}
+
+@keyframes progressAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .confirmedMessage {
-  background: #28a745;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
   color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  animation: pulse 1s infinite;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+  animation: confirmPulse 1.5s infinite;
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+@keyframes confirmPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+  }
 }
 
 .modalFooter {
-  background: #1a1a1a;
+  background: $secondary;
   border: none;
-  padding: 20px 30px;
+  padding: 25px 35px;
   display: flex;
   justify-content: space-between;
-  gap: 15px;
+  gap: 20px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .rejectBtn {
-  background: #dc3545;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
   border: none;
-  padding: 12px 30px;
+  padding: 14px 35px;
   font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: all 0.3s;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+  position: relative;
+  overflow: hidden;
   
-  &:hover {
-    background: #c82333;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #c82333 0%, #a71d2a 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6);
+  }
+  
+  &:hover:not(:disabled)::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
   }
   
   &:disabled {
-    background: #6c757d;
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+    opacity: 0.6;
   }
 }
 
 .confirmBtn {
-  background: #28a745;
+  background: linear-gradient(135deg, $primary 0%, #c91f1f 100%);
   border: none;
-  padding: 12px 30px;
+  padding: 14px 35px;
   font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: all 0.3s;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(230, 49, 49, 0.4);
+  position: relative;
+  overflow: hidden;
   
-  &:hover {
-    background: #218838;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff4444 0%, $primary 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(230, 49, 49, 0.6);
+  }
+  
+  &:hover:not(:disabled)::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
   }
   
   &:disabled {
-    background: #6c757d;
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+    opacity: 0.6;
   }
 }
 
 // Responsive design
 @media (max-width: 768px) {
+  .matchModal {
+    :global(.modal-dialog) {
+      max-width: 95%;
+      margin: 0.5rem;
+    }
+  }
+  
+  .modalHeader {
+    padding: 20px 15px;
+  }
+  
+  .modalTitle {
+    font-size: 1.5rem;
+  }
+  
+  .modalBody {
+    padding: 20px 15px;
+  }
+  
   .teamsContainer {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
   
   .vsContainer {
     min-width: auto;
+    margin: 15px 0;
   }
   
   .vs {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
+    
+    &::before,
+    &::after {
+      display: none;
+    }
   }
   
   .timer {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
   
   .modalFooter {
     flex-direction: column;
+    padding: 20px 15px;
   }
   
   .rejectBtn,
   .confirmBtn {
     width: 100%;
+    padding: 12px 25px;
+  }
+  
+  .team {
+    padding: 20px 15px;
   }
 }

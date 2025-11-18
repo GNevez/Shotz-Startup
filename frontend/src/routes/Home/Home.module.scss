@@ -1,6 +1,6 @@
 .sobreposicao {
     position: relative;
-  }
+}
   
 .sobreposicao::before {
   content: "";
@@ -23,6 +23,7 @@
     font-size: 70px;
     width: 100%;
     justify-content: center;
+    z-index: 2;
 }
 
 .mainText strong {
@@ -43,6 +44,7 @@
     font-weight: 500;
     width: 100%;
     justify-content: center;
+    z-index: 2;
 }
 
 .subText strong {
@@ -58,6 +60,7 @@
     transform: translate(-50%, -50%);
     display: none;
     width: 200px;
+    z-index: 2;
 }
 
 .rodapeHome{
@@ -65,10 +68,11 @@
     width: 100%;
     background-color: rgba(20, 20, 20, 0.5);
     height: 75px;
-    bottom: 3px;
+    bottom: 0; /* fixa no fundo da seção de destaque */
     text-align: center;
     justify-content: center;
     display: flex;
+    z-index: 2;
 }
 
 .warnLogo{
